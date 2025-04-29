@@ -99,6 +99,10 @@ function portobasic_setup() {
 			'flex-height' => true,
 		)
 	);
+
+	if (!is_admin()) {
+		add_filter('show_admin_bar', '__return_false');
+	}
 }
 add_action( 'after_setup_theme', 'portobasic_setup' );
 
@@ -138,6 +142,15 @@ add_action( 'widgets_init', 'portobasic_widgets_init' );
  * Enqueue scripts and styles.
  */
 function portobasic_scripts() {
+	// Enqueue styles
+	wp_enqueue_style('portobasic-style-bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), _S_VERSION);
+	wp_enqueue_style('portobasic-style-animate', get_template_directory_uri() . '/assets/css/animate.min.css', array(), _S_VERSION);
+	wp_enqueue_style('portobasic-style-fontawesome', get_template_directory_uri() . '/assets/css/fontawesome.min.css', array(), _S_VERSION);
+	wp_enqueue_style('portobasic-style-all', get_template_directory_uri() . '/assets/css/all.min.css', array(), _S_VERSION);
+	wp_enqueue_style('portobasic-style-odometer', get_template_directory_uri() . '/assets/css/odometer.min.css', array(), _S_VERSION);
+	wp_enqueue_style('portobasic-style-meanmenu', get_template_directory_uri() . '/assets/css/meanmenu.css', array(), _S_VERSION);
+	wp_enqueue_style('portobasic-style-swipper', get_template_directory_uri() . '/assets/css/swipper.css', array(), _S_VERSION);
+
 	wp_enqueue_style( 'portobasic-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_style_add_data( 'portobasic-style', 'rtl', 'replace' );
 
@@ -146,8 +159,28 @@ function portobasic_scripts() {
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
+
+	// Enqueue scripts
+	wp_enqueue_script('portobasic-script-jquery', get_template_directory_uri() . '/assets/js/jquery.min.js', array(), _S_VERSION, true);
+	wp_enqueue_script('portobasic-script-bootstrap', get_template_directory_uri() . '/assets/js/bootstrap.bundle.min.js', array(), _S_VERSION, true);
+	wp_enqueue_script('portobasic-script-swipper', get_template_directory_uri() . '/assets/js/swipper-bundle.min.js', array(), _S_VERSION, true);
+	wp_enqueue_script('portobasic-script-meanmenu', get_template_directory_uri() . '/assets/js/jquery.meanmenu.min.js', array(), _S_VERSION, true);
+	wp_enqueue_script('portobasic-script-wow', get_template_directory_uri() . '/assets/js/wow.min.js', array(), _S_VERSION, true);
+	wp_enqueue_script('portobasic-script-odometer', get_template_directory_uri() . '/assets/js/odometer.min.js', array(), _S_VERSION, true);
+	wp_enqueue_script('portobasic-script-appear', get_template_directory_uri() . '/assets/js/appear.min.js', array(), _S_VERSION, true);
+	wp_enqueue_script('portobasic-script-main', get_template_directory_uri() . '/assets/js/main.js', array(), _S_VERSION, true);
+
+	
 }
 add_action( 'wp_enqueue_scripts', 'portobasic_scripts' );
+
+// Disable default block styles
+function remove_wp_block_library_css(){
+    wp_dequeue_style('wp-block-library'); // Core block library
+    wp_dequeue_style('wp-block-library-theme'); // Default theme styles
+    wp_dequeue_style('global-styles'); // Theme.json global styles
+}
+add_action('wp_enqueue_scripts', 'remove_wp_block_library_css', 100);
 
 /**
  * Implement the Custom Header feature.
