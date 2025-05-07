@@ -10,24 +10,25 @@
  */
 
 ?>
-<!--
-	<footer id="colophon" class="site-footer">
-		<div class="site-info">
-			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'portobasic' ) ); ?>">
 				<?php
-				/* translators: %s: CMS name, i.e. WordPress. */
-				printf( esc_html__( 'Proudly powered by %s', 'portobasic' ), 'WordPress' );
+					// This runs on all pages EXCEPT the front page
+					if ( ! is_home() && ! is_front_page() ) {
+						?>
+						<!-- footer -->
+						<div class="footer-copyright text-center pt-25 pb-25">
+							<span>© 2024 All Rights Reserved by Simon Gomes.</span>
+						</div>
+						<?php
+					}
 				?>
-			</a>
-			<span class="sep"> | </span>
-				<?php
-				/* translators: 1: Theme name, 2: Theme author. */
-				printf( esc_html__( 'Theme: %1$s by %2$s.', 'portobasic' ), 'portobasic', '<a href="https://github.com/simongomes">Simon Gomes</a>' );
-				?>
+				
+			</div>
+			<!-- end page-wrap -->
 		</div>
-	</footer>
-</div>
--->
+		<!-- end page-area -->
+	</div>
+	<!-- end page-wrapper -->
+</main>
 
 <?php wp_footer(); ?>
 
